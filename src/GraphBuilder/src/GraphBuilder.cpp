@@ -1,4 +1,5 @@
 #include "GraphBuilder.hpp"
+
 #include <vector>
 #include <utility>
 
@@ -15,4 +16,5 @@ Graph GraphBuilder::build_random_graph(int vertex_count, int radius, int edges_m
             edges[i].push_back(sub_vertex);
         }
     }
+    return Graph(vertexes, edges);
 }

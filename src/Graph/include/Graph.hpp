@@ -1,3 +1,6 @@
+#ifndef GRAPH_HPP
+#define GRAPH_HPP
+
 #include <vector>
 #include <utility>
 
@@ -11,3 +14,5 @@ public:
     const std::vector<std::pair<int, int>>& get_vertexes() const;
     const std::vector<std::vector<int>>& get_edges() const;
 };
+
+#endif

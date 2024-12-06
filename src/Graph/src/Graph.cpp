@@ -1,4 +1,5 @@
 #include "Graph.hpp"
+
 #include <vector>
 
 Graph::Graph(const std::vector<std::pair<int, int>>& vertexes, const std::vector<std::vector<int>>& edges)

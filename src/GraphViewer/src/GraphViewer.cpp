@@ -1,9 +1,12 @@
 #include "GraphViewer.hpp"
 
+#include <QtWidgets/QWidget>
 #include <QtGui/QPainter>
 #include <QtGui/QColor>
 
 GraphViewer::GraphViewer(const Graph& graph, QWidget* parent) : QWidget(parent), graph_(graph) {} 
+
+GraphViewer::~GraphViewer() {}
 
 void GraphViewer::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
@@ -26,3 +29,4 @@ void GraphViewer::paintEvent(QPaintEvent* event) {
         }
     }
 }
+

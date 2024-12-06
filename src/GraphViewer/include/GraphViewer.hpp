@@ -3,14 +3,15 @@
 
 #include "Graph.hpp"
 
-#include <QtWidgets/QWidget>
+#include <QMainWindow>
 
 class GraphViewer : public QWidget {
-    Q_OBJECT
+    // Q_OBJECT
     Graph graph_;
 public:
     GraphViewer(const Graph&, QWidget* parent = nullptr);
-    void paintEvent(QPaintEvent*);
+    void paintEvent(QPaintEvent*) override;
+    ~GraphViewer();
 };
 
 #endif
