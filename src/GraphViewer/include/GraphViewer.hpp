@@ -4,10 +4,13 @@
 #include "Graph.hpp"
 
 #include <QMainWindow>
+#include <QtCore/QPointF>
 
 class GraphViewer : public QWidget {
-    // Q_OBJECT
+    
     Graph graph_;
+    double scale_ = 1.0;
+    QPointF cam_pos_ = {0.0, 0.0};
 public:
     GraphViewer(const Graph&, QWidget* parent = nullptr);
     void paintEvent(QPaintEvent*) override;
