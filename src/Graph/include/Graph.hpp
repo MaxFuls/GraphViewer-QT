@@ -21,6 +21,7 @@ public:
     const std::vector<std::vector<int>>& get_edges() const;
     const std::vector<std::vector<double>>& get_distances() const;
     int get_radius() const;
+    
     friend class GraphBuilder;
 };
 
