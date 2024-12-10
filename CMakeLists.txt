@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
-set(PROJECT_SOURCES main.cpp)
+set(PROJECT_SOURCES main.cpp mainwindow.hpp mainwindow.cpp mainwindow.ui)
 set(PROJECT_NAME Graph)
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
@@ -23,5 +23,6 @@ add_subdirectory(src/GraphBuilder)
 add_subdirectory(src/GraphViewer)
 
 target_link_libraries(Graph PRIVATE GraphViewer GraphBuilder Randomizer GraphLib)
+target_include_directories(Graph PRIVATE src/GraphBuilder/include src/GraphViewer/include)
  
 # install(TARGETS Graph BUNDLE DESTINATION . LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})

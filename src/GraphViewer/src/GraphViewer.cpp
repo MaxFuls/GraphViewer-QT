@@ -1,21 +1,24 @@
 #include "GraphViewer.hpp"
+#include "GraphBuilder.hpp"
 
 #include <QtWidgets/QWidget>
 #include <QtGui/QPainter>
 #include <QtGui/QColor>
 
-GraphViewer::GraphViewer(const Graph& graph, int distance_price, QWidget* parent) : 
-                         QWidget(parent), graph(graph), distance_price(distance_price)  {
-    int min_side = std::min(width(), height());
-    double diag = graph.get_radius() * 2;
-    scale = min_side / diag;
-    elllipse_coords = QPointF(0, 0);
-    repaint();
+GraphViewer::GraphViewer(QWidget* parent) : QWidget(parent) {
+    // int min_side = std::min(width(), height());
+    // double diag = graph.get_radius() * 2;
+    // scale = min_side / diag;
+    // elllipse_coords = QPointF(0, 0);
+    // repaint();
 } 
 
 GraphViewer::~GraphViewer() {}
 
 void GraphViewer::paintEvent(QPaintEvent*) {
+    if(!is_setted) {
+        return;
+    }
     int diam = graph.get_radius() * 2;
     int min_side = std::min(width(), height());
     QPainter painter(this);
@@ -26,14 +29,22 @@ void GraphViewer::paintEvent(QPaintEvent*) {
     auto brush = QBrush(Qt::black);
     painter.setBrush(brush);
     auto vertxes = graph.get_vertexes();
-    for(auto v :vertxes) {
-        painter.drawEllipse(QPoint(v.first, v.second)*scale, static_cast<int>(5*scale), static_cast<int>(5*scale));
-    }
-    // pen.setWidth(scale);
+    pen.setColor(Qt::blue);
+    painter.setPen(pen);
     auto font = painter.font();
     font.setPixelSize((8*scale < 8) ? 8 : (8*scale > 16) ? 16 : 8*scale);
-    painter.setPen(pen);
     painter.setFont(font);
+    // Отрисовка вершин
+    for(int i = 0, size = vertxes.size(); i < size; ++i) {
+        painter.drawEllipse(QPoint(vertxes[i].first, vertxes[i].second)*scale,
+            static_cast<int>(4*scale), static_cast<int>(4*scale));
+        // Отрисовка номеров
+        if(!is_numbers_hiden) {
+            painter.drawText(QPoint(vertxes[i].first - 4, vertxes[i].second - 4)*scale, QString::fromStdString(std::to_string(i)));
+        }
+    }
+    pen.setColor(Qt::white);
+    painter.setPen(pen);
     auto edges = graph.get_edges();
     auto distances = graph.get_distances();
     std::vector<std::vector<bool>> is_visited(vertxes.size(), std::vector<bool>(vertxes.size()));
@@ -46,7 +57,8 @@ void GraphViewer::paintEvent(QPaintEvent*) {
             pen.setColor(Qt::black);
             painter.setPen(pen);
             painter.drawLine(QPoint(firstx, firsty)*scale, QPoint(secondx, secondy)*scale);
-            if(!is_visited[i][edges[i][j]]) {
+            // отрисовка стоимости переходов
+            if(!is_prices_hiden && !is_visited[i][edges[i][j]]) {
                 pen.setColor(Qt::red);
                 painter.setPen(pen);
                 painter.drawText(scale*(firstx + (secondx - firstx)/2), scale*(firsty + (secondy - firsty)/2),
@@ -57,6 +69,43 @@ void GraphViewer::paintEvent(QPaintEvent*) {
         }
     }
 }
+
+void GraphViewer::set_price(int price) {
+    distance_price = price;
+}
+
+
+void GraphViewer::show_numbers() {
+    is_numbers_hiden = false;
+    repaint();
+}   
+
+void GraphViewer::hide_numbers() {
+    is_numbers_hiden = true;
+    repaint();
+}
+
+void GraphViewer::show_prices() {
+    is_prices_hiden = false;
+    repaint();
+}
+    
+void GraphViewer::hide_prices() {
+    is_prices_hiden = true;
+    repaint();
+}
+
+void GraphViewer::regenerate_graph(int vertex_count, int radius, int min_edges_count, int max_edges_count) {
+    int min_side = std::min(width(), height());
+    double diag = radius * 2;
+    scale = min_side / diag;
+    elllipse_coords = QPointF(0, 0);
+    GraphBuilder b;
+    graph = b.build_random_graph(vertex_count, radius, min_edges_count, max_edges_count);
+    is_setted = true;
+    repaint();
+    resize(width(), height());
+} 
 
 void GraphViewer::mousePressEvent(QMouseEvent* event) {
     mouse_pressed = true;

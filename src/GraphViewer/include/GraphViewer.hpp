@@ -7,7 +7,6 @@
 #include <QtCore/QPointF>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QWheelEvent>
-#include <QtGui/QPainterPath>
 
 class GraphViewer : public QWidget {
     
@@ -18,14 +17,23 @@ class GraphViewer : public QWidget {
     bool mouse_pressed = false;
     QPointF prev_mouse_pos;
     QPointF elllipse_coords;
+    bool is_numbers_hiden = false;
+    bool is_prices_hiden = false;
+    bool is_setted;
 public:
-    GraphViewer(const Graph&, int, QWidget* parent = nullptr);
+    GraphViewer(QWidget* parent = nullptr);
     void paintEvent(QPaintEvent*) override;
     void mousePressEvent(QMouseEvent*) override;
     void mouseReleaseEvent(QMouseEvent*) override;
     void mouseMoveEvent(QMouseEvent*) override;
     void resizeEvent(QResizeEvent*) override;
     void wheelEvent(QWheelEvent*) override;
+    void show_numbers();
+    void hide_numbers();
+    void show_prices();
+    void hide_prices();
+    void regenerate_graph(int, int, int, int);
+    void set_price(int);
     ~GraphViewer();
 };
 

@@ -4,3 +4,5 @@ target_link_libraries(GraphViewer PUBLIC Qt6::Widgets)
 
 target_include_directories(GraphViewer PUBLIC include)
 target_include_directories(GraphViewer PUBLIC ../Graph/include)
+target_include_directories(GraphViewer PUBLIC ../GraphBuilder/include)
+target_include_directories(GraphViewer PUBLIC ../Randomizer/include)

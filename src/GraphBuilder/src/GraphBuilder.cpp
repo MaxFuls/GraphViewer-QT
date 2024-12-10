@@ -19,8 +19,10 @@ Graph GraphBuilder::build_random_graph(int vertex_count, int radius, int edges_m
         for(int j = 0, sub_vertex, edges_count = random.generate_on_range(edges_min, edges_max);
                 j < edges_count && edges[i].size() < edges_count; ++j) {
             sub_vertex = random.generate_on_range(0, vertex_count - 1);
-            while(sub_vertex == i || std::find(edges[i].begin(), edges[i].end(), sub_vertex) != edges[i].end()) {
-                sub_vertex = random.generate_on_range(0, vertex_count - 1);
+            while(std::find(edges[i].begin(), edges[i].end(), sub_vertex) != edges[i].end() ||
+                  edges[sub_vertex].size() == edges_max || sub_vertex == i) {
+                    
+                    sub_vertex = random.generate_on_range(0, vertex_count - 1);
             }
             edges[i].push_back(sub_vertex);
             edges[sub_vertex].push_back(i);
@@ -31,5 +33,5 @@ Graph GraphBuilder::build_random_graph(int vertex_count, int radius, int edges_m
             distances[sub_vertex].push_back(distance); 
         }
     }
-    return Graph(vertexes, edges, distances, radius);
+    return Graph(vertexes, edges, distances, radius, edges_min, edges_max);
 }
