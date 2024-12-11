@@ -6,11 +6,6 @@
 #include <QtGui/QColor>
 
 GraphViewer::GraphViewer(QWidget* parent) : QWidget(parent) {
-    // int min_side = std::min(width(), height());
-    // double diag = graph.get_radius() * 2;
-    // scale = min_side / diag;
-    // elllipse_coords = QPointF(0, 0);
-    // repaint();
 } 
 
 GraphViewer::~GraphViewer() {}

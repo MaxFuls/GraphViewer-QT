@@ -9,8 +9,7 @@
 #include <QtGui/QWheelEvent>
 
 class GraphViewer : public QWidget {
-    
-    Graph graph;
+private:   
     int distance_price;
     double scale = 1.0;
     QPointF cam_pos = {0, 0};
@@ -21,6 +20,7 @@ class GraphViewer : public QWidget {
     bool is_prices_hiden = false;
     bool is_setted;
 public:
+    Graph graph;
     GraphViewer(QWidget* parent = nullptr);
     void paintEvent(QPaintEvent*) override;
     void mousePressEvent(QMouseEvent*) override;

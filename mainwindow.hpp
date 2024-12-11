@@ -25,6 +25,7 @@ private slots:
     void on_vertex_checkbox_stateChanged(int);
     void on_price_checkbox_stateChanged(int);
     void on_regeneration_button_clicked();
+    void on_cheapest_button_clicked();
     
 };
 #endif // MAINWINDOW_H

@@ -54,6 +54,29 @@ void MainWindow::on_regeneration_button_clicked() {
     }    
 }
 
+void MainWindow::on_cheapest_button_clicked() {
+    int end;
+    try {
+        end = std::stoi((ui->lineEdit->text()).toStdString());
+    } catch(std::exception& ex) {
+        qDebug() << ex.what();
+        ui->lineEdit->clear();
+    }
+    qDebug() << end;
+    auto p = viewer->graph.find_cheapest_way_from_begin(end);
+    if(p.second.empty()) {
+        ui->textBrowser->setText("Пути в данную вершину не существует\n");
+    } else {
+        qDebug() << p.first;
+        std::string str = "Общая стоимость - " + std::to_string(p.first) + "\n";
+        str += std::to_string(p.second[0]);
+        for(int i = 1; i < p.second.size(); ++i) {
+            str += " -> " + std::to_string(p.second[i]);
+        }
+        ui->textBrowser->setText(QString::fromStdString(str));
+    }
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
