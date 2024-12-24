@@ -1,15 +1,14 @@
-#ifndef graphVIEWER_HPP
-#define graphVIEWER_HPP
-
-#include "Graph.hpp"
+#pragma once
 
 #include <QMainWindow>
 #include <QtCore/QPointF>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QWheelEvent>
 
+#include "Graph.hpp"
+
 class GraphViewer : public QWidget {
-private:   
+   private:
     int distance_price;
     double scale = 1.0;
     QPointF cam_pos = {0, 0};
@@ -19,7 +18,8 @@ private:
     bool is_numbers_hiden = false;
     bool is_prices_hiden = false;
     bool is_setted;
-public:
+
+   public:
     Graph graph;
     GraphViewer(QWidget* parent = nullptr);
     void paintEvent(QPaintEvent*) override;
@@ -36,5 +36,3 @@ public:
     void set_price(int);
     ~GraphViewer();
 };
-
-#endif

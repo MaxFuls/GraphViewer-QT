@@ -1,11 +1,10 @@
-#ifndef GRAPH_HPP
-#define GRAPH_HPP
+#pragma once
 
-#include <vector>
 #include <utility>
+#include <vector>
 
 class Graph {
-private:
+   private:
     std::vector<std::pair<int, int>> vertexes;
     std::vector<std::vector<int>> edges;
     std::vector<std::vector<int>> distances;
@@ -16,13 +15,12 @@ private:
     int min_edges_count;
     int max_edges_count;
     void compute_path_and_dists();
-protected:
-    Graph(const std::vector<std::pair<int, int>>&,
-          const std::vector<std::vector<int>>&,
-          const std::vector<std::vector<int>>&,
-          const std::vector<std::vector<std::pair<int, int>>>&,
-          int, int, int);
-public:
+
+   protected:
+    Graph(const std::vector<std::pair<int, int>>&, const std::vector<std::vector<int>>&,
+          const std::vector<std::vector<int>>&, const std::vector<std::vector<std::pair<int, int>>>&, int, int, int);
+
+   public:
     Graph() = default;
     const std::vector<std::pair<int, int>>& get_vertexes() const;
     const std::vector<std::vector<int>>& get_edges() const;
@@ -31,8 +29,6 @@ public:
     int get_radius() const;
     int get_min_edges_count() const;
     int get_max_edges_count() const;
-    
+
     friend class GraphBuilder;
 };
-
-#endif
