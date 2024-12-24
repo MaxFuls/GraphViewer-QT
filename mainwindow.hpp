@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QtWidgets/QWidget>
 
+#include "DataWidget.hpp"
 #include "GraphBuilder.hpp"
 #include "GraphViewer.hpp"
 
@@ -16,12 +17,13 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
    public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
    private:
-    Ui::MainWindow *ui;
-    GraphViewer *viewer;
+    Ui::MainWindow* ui;
+    GraphViewer* viewer;
+    DataWidget* data_widget;
    private slots:
     void on_vertex_checkbox_stateChanged(int);
     void on_price_checkbox_stateChanged(int);
