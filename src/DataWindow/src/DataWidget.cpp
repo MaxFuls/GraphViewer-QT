@@ -125,6 +125,7 @@ std::optional<std::pair<int, int>> DataWidget::get_edges_count() {
             }
             min_form->clear_edit();
         }
+        return std::nullopt;
     }
 }
 
