@@ -4,6 +4,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QWidget>
+#include <memory>
 #include <optional>
 #include <string>
 #include <unordered_map>
@@ -21,7 +22,7 @@ class DataWidget : public QWidget {
     std::optional<int> get_price();
 
    private:
-    std::unordered_map<std::string, Form*> forms_;
+    std::unordered_map<std::string, std::unique_ptr<Form>> forms_;
     QIntValidator* vertex_count_validator_;
     QIntValidator* radius_validator_;
     QIntValidator* edges_count_validator_;

@@ -4,19 +4,19 @@
 #include <optional>
 
 DataWidget::DataWidget(QWidget* parrent) : QWidget(parrent) {
-    forms_.insert({"vertex_count", new Form(QString("Количество вершин"))});
-    forms_.insert({"radius", new Form(QString("Радиус"))});
-    forms_.insert({"min_edges_count", new Form(QString("Мнимальное количество рёбер"))});
-    forms_.insert({"max_edges_count", new Form(QString("Максимальное количество рёбер"))});
-    forms_.insert({"price", new Form(QString("Цена еденицы расстояния"))});
+    forms_.insert({"vertex_count", std::make_unique<Form>(QString("Количество вершин"))});
+    forms_.insert({"radius", std::make_unique<Form>(QString("Радиус"))});
+    forms_.insert({"min_edges_count", std::make_unique<Form>(QString("Мнимальное количество рёбер"))});
+    forms_.insert({"max_edges_count", std::make_unique<Form>(QString("Максимальное количество рёбер"))});
+    forms_.insert({"price", std::make_unique<Form>(QString("Цена еденицы расстояния"))});
 
     QVBoxLayout* layout = new QVBoxLayout;
 
-    layout->addWidget(forms_["vertex_count"]);
-    layout->addWidget(forms_["radius"]);
-    layout->addWidget(forms_["min_edges_count"]);
-    layout->addWidget(forms_["max_edges_count"]);
-    layout->addWidget(forms_["price"]);
+    layout->addWidget(forms_["vertex_count"].get());
+    layout->addWidget(forms_["radius"].get());
+    layout->addWidget(forms_["min_edges_count"].get());
+    layout->addWidget(forms_["max_edges_count"].get());
+    layout->addWidget(forms_["price"].get());
     setLayout(layout);
 
     vertex_count_validator_ = new QIntValidator(1, 100);
@@ -26,7 +26,7 @@ DataWidget::DataWidget(QWidget* parrent) : QWidget(parrent) {
 }
 
 std::optional<int> DataWidget::get_vertex_count() {
-    auto* form = forms_["vertex_count"];
+    auto& form = forms_["vertex_count"];
     auto data = form->get_data_from_edit();
     if (data.isEmpty()) {
         qDebug() << "vertex count field can not be empty\n";
@@ -47,7 +47,7 @@ std::optional<int> DataWidget::get_vertex_count() {
 }
 
 std::optional<int> DataWidget::get_radius() {
-    auto* form = forms_["radius"];
+    auto& form = forms_["radius"];
     auto data = form->get_data_from_edit();
     if (data.isEmpty()) {
         qDebug() << "radius field can not be empty\n";
@@ -68,7 +68,7 @@ std::optional<int> DataWidget::get_radius() {
 }
 
 std::optional<int> DataWidget::get_price() {
-    auto* form = forms_["price"];
+    auto& form = forms_["price"];
     auto data = form->get_data_from_edit();
     if (data.isEmpty()) {
         qDebug() << "price field can not be empty\n";
@@ -89,8 +89,8 @@ std::optional<int> DataWidget::get_price() {
 }
 
 std::optional<std::pair<int, int>> DataWidget::get_edges_count() {
-    auto* min_form = forms_["min_edges_count"];
-    auto* max_form = forms_["max_edges_count"];
+    auto& min_form = forms_["min_edges_count"];
+    auto& max_form = forms_["max_edges_count"];
     auto min_data = min_form->get_data_from_edit();
     auto max_data = max_form->get_data_from_edit();
     if (min_data.isEmpty() || max_data.isEmpty()) {
